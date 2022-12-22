@@ -36,7 +36,12 @@ namespace WalkingInTheWild
         {
             get
             {
-                return _maxLoad;
+                float newLoad = _maxLoad;
+                foreach(Equipment equipment in _equipments)
+                {
+                    newLoad -= equipment.Weight;
+                }
+                return newLoad;
             }
         }
 
@@ -47,6 +52,10 @@ namespace WalkingInTheWild
 
         public void Add(Equipment equipment)
         {
+            if(equipment.Weight >RemainingLoadCapacity)
+            {
+                throw new MaximumLoadReachedException();
+            }
             _equipments.Add(equipment);
         }
         //endregion public methods
