@@ -40,11 +40,19 @@
 
         public void DropBagpack()
         {
+            if (Bagpack == null)
+            {
+                throw new WalkerDoesntCarryABagpackException();
+            }
             _bagpack = null;
         }
 
         public void LoadBagpack(List<Cloth> cloths)
         {
+            if (Bagpack == null)
+            {
+                throw new WalkerDoesntCarryABagpackException();
+            }
             foreach (Cloth cloth in cloths)
             {
                 _bagpack?.Add(cloth);
@@ -53,6 +61,10 @@
 
         public void LoadBagpack(List<Equipment> equipments)
         {
+            if (Bagpack == null)
+            {
+                throw new WalkerDoesntCarryABagpackException();
+            }
             foreach (Equipment equipment in equipments)
             {
                 _bagpack?.Add(equipment);
