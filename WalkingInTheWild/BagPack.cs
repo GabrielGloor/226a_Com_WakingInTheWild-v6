@@ -36,12 +36,8 @@ namespace WalkingInTheWild
         {
             get
             {
-                float newLoad = _maxLoad;
-                foreach(Equipment equipment in _equipments)
-                {
-                    newLoad -= equipment.Weight;
-                }
-                return newLoad;
+                float newLoad = _equipments.Sum(equipment => equipment.Weight);
+                return _maxLoad - newLoad;
             }
         }
 
@@ -51,8 +47,8 @@ namespace WalkingInTheWild
         }
 
         public void Add(Equipment equipment)
-        {
-            if(equipment.Weight >RemainingLoadCapacity)
+        {        
+            if (equipment.Weight > RemainingLoadCapacity)
             {
                 throw new MaximumLoadReachedException();
             }
@@ -61,21 +57,7 @@ namespace WalkingInTheWild
         //endregion public methods
 
         //region private methods
-        private float CurrentLoad
-        {
-            //TODO Discussion - getter or method ? (computed property)
-            get
-            {
-                {
-                    float currentLoad = 0;
-                    foreach (Equipment equipment in _equipments)
-                    {
-                        currentLoad += equipment.Weight;
-                    }
-                    return currentLoad;
-                }
-            }
-        }
+        
         //endregion private methods
 
         //region nested classes
