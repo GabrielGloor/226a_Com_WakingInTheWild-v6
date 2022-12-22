@@ -2,19 +2,89 @@
 {
     public class Walker
     {
-        //region private attributes
+        #region private attributes
         private string _pseudo;
-        private Bagpack? _backpack;
-        //endregion private attributes
+        private Bagpack? _bagpack;
+        #endregion private attributes
 
-        //region public methods
+        #region public methods
         public Walker(string pseudo)
         {
-            throw new NotImplementedException();  
+            _pseudo = pseudo;
         }
-        //endregion public methods
 
-        //region private methods
-        //endregion private methods
+        public string Pseudo
+        {
+            get
+            {
+                return _pseudo;
+            }
+        }
+
+        public Bagpack? Bagpack
+        {
+            get
+            {
+                return _bagpack;
+            }
+        }
+
+        public void TakeBagpack(Bagpack bagpack)
+        {
+            if (Bagpack != null)
+            {
+                throw new WalkerAlreadyCarriesABagpackException();
+            }
+            _bagpack = bagpack;
+        }
+
+        public void DropBagpack()
+        {
+            if (Bagpack == null)
+            {
+                throw new WalkerDoesntCarryABagpackException();
+            }
+            _bagpack = null;
+        }
+
+        public void LoadBagpack(List<Cloth> cloths)
+        {
+            if (Bagpack == null)
+            {
+                throw new WalkerDoesntCarryABagpackException();
+            }
+            foreach (Cloth cloth in cloths)
+            {
+                _bagpack?.Add(cloth);
+            }
+        }
+
+        public void LoadBagpack(List<Equipment> equipments)
+        {
+            if (Bagpack == null)
+            {
+                throw new WalkerDoesntCarryABagpackException();
+            }
+            foreach (Equipment equipment in equipments)
+            {
+                _bagpack?.Add(equipment);
+            }
+        }
+
+        public void EmptyBagpack()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion public methods
+
+        #region private methods
+        #endregion private methods
+
+        #region nested classes
+        public class WalkerException:Exception{}
+        public class WalkerAlreadyCarriesABagpackException : Exception { }
+        public class WalkerDoesntCarryABagpackException : Exception { }
+        public class EmptyBagpackException : WalkerException { }
+        #endregion nested classes
     }
 }
